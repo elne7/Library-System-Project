@@ -1,15 +1,14 @@
 void main(List<String> args) {}
 
 class Book {
-  Book(this.id, this.title, this.borrowed);
+  Book(this.id, this.title);
 
   int id;
   String title;
-  bool borrowed;
+  bool borrowed = false;
 
-  void displayInfo(int id, String title, bool borrowed) {
-    print('The book id is $id');
-    print('The book title is $title');
+  void displayBookInfo() {
+    print('The book title is $title with ID number $id');
     if (borrowed) {
       print('And This book is borrowed');
     } else {
@@ -25,9 +24,8 @@ class User {
   int id;
   String name;
 
-  void displayInfo(int id, String name) {
-    print('The user id is $id');
-    print('The user name is $name');
+  void displayUserInfo() {
+    print('The user name is $name with ID number $id');
     print('..........................');
   }
 }
@@ -38,7 +36,47 @@ class Library {
   List<Book> books;
   List<User> users;
 
-  void addBook (Book book){
+  void addBook(int id, String title) {
+    Book book = Book(id, title);
     books.add(book);
+    print('$title book has been added to the library.');
+  }
+
+  void addUser(int id, String name) {
+    User user = User(id, name);
+    users.add(user);
+    print('$name has joined to the library community.');
+  }
+
+  void borrowBook(Book book) {
+    if (book.borrowed) {
+      print('This book is borrowed');
+    } else {
+      book.borrowed = true;
+      print('The ${book.title} book has been borrowed');
+    }
+  }
+
+  void returnBook(Book book) {
+    if (book.borrowed) {
+      book.borrowed = false;
+      print('The ${book.title} book has been returned');
+    } else {
+      print('This book is already here');
+    }
+  }
+
+  void displayLibraryInfo() {
+    print('The library has ${books.length} book which are: ');
+    for (Book book in books) {
+      book.displayBookInfo();
+    }
+
+    print('.....................');
+
+    print('And also has ${users.length} user which are: ');
+    for (User user in users) {
+      user.displayUserInfo();
+    }
   }
 }
