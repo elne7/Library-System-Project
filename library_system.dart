@@ -1,4 +1,36 @@
-void main(List<String> args) {}
+void main(List<String> args) {
+  print('................................');
+
+  List<Book> libraryBooks = [];
+  List<User> libraryUsers = [];
+
+  Library myLibrary = Library(libraryBooks, libraryUsers);
+
+  Book book1 = myLibrary.addBook(1, 'book1');
+  Book book2 = myLibrary.addBook(2, 'book2');
+  Book book3 = myLibrary.addBook(3, 'book3');
+  Book book4 = myLibrary.addBook(4, 'book4');
+  myLibrary.addBook(5, 'book5');
+
+  print('');
+
+  myLibrary.addUser(1, 'Ahmed');
+  myLibrary.addUser(2, 'Mohamed');
+  myLibrary.addUser(3, 'Ali');
+
+  print('');
+
+  myLibrary.borrowBook(book1);
+  myLibrary.borrowBook(book2);
+  myLibrary.borrowBook(book3);
+  myLibrary.borrowBook(book1);
+  myLibrary.returnBook(book2);
+  myLibrary.returnBook(book4);
+
+  print('');
+
+  myLibrary.displayLibraryInfo();
+}
 
 class Book {
   Book(this.id, this.title);
@@ -36,10 +68,11 @@ class Library {
   List<Book> books;
   List<User> users;
 
-  void addBook(int id, String title) {
+  Book addBook(int id, String title) {
     Book book = Book(id, title);
     books.add(book);
-    print('$title book has been added to the library.');
+    print('$title has been added to the library.');
+    return book;
   }
 
   void addUser(int id, String name) {
@@ -50,19 +83,21 @@ class Library {
 
   void borrowBook(Book book) {
     if (book.borrowed) {
-      print('This book is borrowed');
+      print(
+          'You are trying to borrow ${book.title} but this book is already borrowed');
     } else {
       book.borrowed = true;
-      print('The ${book.title} book has been borrowed');
+      print('The ${book.title} has been borrowed');
     }
   }
 
   void returnBook(Book book) {
     if (book.borrowed) {
       book.borrowed = false;
-      print('The ${book.title} book has been returned');
+      print('The ${book.title} has been returned');
     } else {
-      print('This book is already here');
+      print(
+          'You can\'t return ${book.title} because this book is already here');
     }
   }
 
@@ -72,9 +107,7 @@ class Library {
       book.displayBookInfo();
     }
 
-    print('.....................');
-
-    print('And also has ${users.length} user which are: ');
+    print('And also the library has ${users.length} users which are: ');
     for (User user in users) {
       user.displayUserInfo();
     }
